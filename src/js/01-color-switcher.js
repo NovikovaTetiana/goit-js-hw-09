@@ -12,7 +12,11 @@ btnStartEl.addEventListener(
   () => {
     timerId = setTimeout(() => {
       bodyEl.style.backgroundColor = getRandomHexColor();
+
       btnStartEl.disabled = true;
+
+      btnStopEl.disabled = false;
+
       timerId = setInterval(() => {
         bodyEl.style.backgroundColor = getRandomHexColor();
       }, 1000);
@@ -25,4 +29,6 @@ btnStopEl.addEventListener('click', () => {
   clearInterval(timerId);
 
   btnStartEl.disabled = false;
+  
+  btnStopEl.disabled = true;
 });
