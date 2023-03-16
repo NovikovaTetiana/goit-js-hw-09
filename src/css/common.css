@@ -27,4 +27,13 @@ img {
  border-radius: 50px;
  font-size: 24px;
  background-color: hsl(75, 85%, 85%);
+ box-shadow: 2px 10px 15px -5px rgba(0,0,0,0.75);
+}
+
+.btn-activ{
+  background-color: hsl(165, 70%, 41%);
+}
+
+.btn-stop{
+  background-color: hsl(1, 91%, 50%);
 }

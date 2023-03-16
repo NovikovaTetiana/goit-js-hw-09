@@ -13,6 +13,9 @@ btnStartEl.addEventListener('click', () =>{
     bodyEl.style.backgroundColor = getRandomHexColor();
 
     btnStartEl.disabled = true;
+
+    btnStartEl.classList.add('btn-activ');
+    btnStopEl.classList.remove('btn-stop');
     
   }, 1000);
 });
@@ -21,5 +24,8 @@ btnStopEl.addEventListener('click', () => {
   clearInterval(timerId);
 
   btnStartEl.disabled = false;
+
+  btnStartEl.classList.remove('btn-activ')
+  btnStopEl.classList.add('btn-stop')
 });
 
