@@ -2,7 +2,7 @@ import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
 import Notiflix from 'notiflix';
 
-const ref = {
+const refs = {
   inputEl: document.querySelector('#datetime-picker'),
   btnStart: document.querySelector('.btn-start'),
   days: document.querySelector('[data-days]'),
@@ -13,7 +13,7 @@ const ref = {
 
 let timerId = null;
 
-flatpickr(ref.inputEl, {
+flatpickr(refs.inputEl, {
   enableTime: true,
   time_24hr: true,
   defaultDate: new Date(),
@@ -26,24 +26,22 @@ flatpickr(ref.inputEl, {
 function chooseDay(selectedDates) {
   if (selectedDates[0] < Date.now()) {
     Notiflix.Notify.failure('Please choose a date in the future');
-    ref.btnStart.disabled = false;
+    refs.btnStart.disabled = false;
+    return;
   } else {
-    ref.btnStart.disabled = true;
-    ref.btnStart.addEventListener('click', handlerStarTimer);
+    refs.btnStart.disabled = true;
+    refs.btnStart.addEventListener('click', handlerStarTimer);
     
     handlerStarTimer();
-
-    selectedDates = selectedDates[0];
 
     function handlerStarTimer() {
       timerId = setInterval(() => {
         const currentDate = new Date();
-        const differetnTime = selectedDates - currentDate;
+        const differetnTime = selectedDates[0] - currentDate;
         const clock = convertMs(differetnTime)
         updateClockFase (clock)
     
-
-        if (differetnTime < 0) {
+        if (differetnTime <= 1000) {
           clearInterval(timerId);
         return;
         };
@@ -53,10 +51,10 @@ function chooseDay(selectedDates) {
 }
 
 function updateClockFase ({days, hours, minutes, seconds}){
-  ref.days.textContent = days,
-  ref.hours.textContent = hours,
-  ref.minutes.textContent = minutes,
-  ref.seconds.textContent = seconds
+  refs.days.textContent = days,
+  refs.hours.textContent = hours,
+  refs.minutes.textContent = minutes,
+  refs.seconds.textContent = seconds
 }
 
   function addLeadingZero(differetnTime) {
@@ -79,7 +77,6 @@ function convertMs(ms) {
   // Remaining seconds
   const seconds = addLeadingZero(Math.floor((((ms % day) % hour) % minute) / second));
 
-  // createMarkup({ days, hours, minutes, seconds })
   return { days, hours, minutes, seconds };
 }
 
