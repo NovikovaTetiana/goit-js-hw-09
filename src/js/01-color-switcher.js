@@ -7,28 +7,25 @@ function getRandomHexColor() {
   return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
 }
 
-btnStartEl.addEventListener(
-  'click',
-  () => {
-    timerId = setTimeout(() => {
-      bodyEl.style.backgroundColor = getRandomHexColor();
+function changeBtnStartDisabled() {
+  btnStartEl.disabled = true;
+  btnStopEl.disabled = false;
+}
 
-      btnStartEl.disabled = true;
+function changeBtnStopDisabled() {
+  btnStopEl.disabled = true;
+  btnStartEl.disabled = false;
+}
 
-      btnStopEl.disabled = false;
-
-      timerId = setInterval(() => {
-        bodyEl.style.backgroundColor = getRandomHexColor();
-      }, 1000);
-    });
-  },
-  0
-);
+btnStartEl.addEventListener('click', () => {
+  timerId = setInterval(() => {
+    bodyEl.style.backgroundColor = getRandomHexColor();
+    changeBtnStartDisabled();
+  }, 1000);
+});
 
 btnStopEl.addEventListener('click', () => {
   clearInterval(timerId);
 
-  btnStartEl.disabled = false;
-  
-  btnStopEl.disabled = true;
+  changeBtnStopDisabled();
 });

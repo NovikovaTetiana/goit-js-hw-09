@@ -30,36 +30,36 @@ function chooseDay(selectedDates) {
     return;
   } else {
     refs.btnStart.disabled = true;
-    refs.btnStart.addEventListener('click', handlerStarTimer);
-    
     handlerStarTimer();
+  }
 
-    function handlerStarTimer() {
-      timerId = setInterval(() => {
-        const currentDate = new Date();
-        const differetnTime = selectedDates[0] - currentDate;
-        const clock = convertMs(differetnTime)
-        updateClockFase (clock)
-    
-        if (differetnTime <= 1000) {
-          clearInterval(timerId);
+  refs.btnStart.addEventListener('click', handlerStarTimer);
+
+  function handlerStarTimer() {
+    timerId = setInterval(() => {
+      const currentDate = Date.now();
+      const differetnTime = selectedDates[0] - currentDate;
+      const clock = convertMs(differetnTime);
+      updateClockFase(clock);
+
+      if (differetnTime <= 1000) {
+        clearInterval(timerId);
         return;
-        };
-      }, 1000);
-    }
+      }
+    }, 1000);
   }
 }
 
-function updateClockFase ({days, hours, minutes, seconds}){
-  refs.days.textContent = days,
-  refs.hours.textContent = hours,
-  refs.minutes.textContent = minutes,
-  refs.seconds.textContent = seconds
+function updateClockFase({ days ='00', hours='00', minutes='00', seconds='00' } = {}) {
+  (refs.days.textContent = days),
+    (refs.hours.textContent = hours),
+    (refs.minutes.textContent = minutes),
+    (refs.seconds.textContent = seconds);
 }
 
-  function addLeadingZero(differetnTime) {
-      return String(differetnTime).padStart(2, '0');
-    }
+function addLeadingZero(differetnTime) {
+  return String(differetnTime).padStart(2, '0');
+}
 
 function convertMs(ms) {
   // Number of milliseconds per unit of time
@@ -68,7 +68,7 @@ function convertMs(ms) {
   const hour = minute * 60;
   const day = hour * 24;
 
-  // Remaining days
+  // Remaining days  // Коли визиваю updateClockFase - undefind
   const days = addLeadingZero(Math.floor(ms / day));
   // Remaining hours
   const hours = addLeadingZero(Math.floor((ms % day) / hour));
@@ -76,6 +76,7 @@ function convertMs(ms) {
   const minutes = addLeadingZero(Math.floor(((ms % day) % hour) / minute));
   // Remaining seconds
   const seconds = addLeadingZero(Math.floor((((ms % day) % hour) % minute) / second));
+ 
 
   return { days, hours, minutes, seconds };
 }
